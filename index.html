@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>一键获取token vue版本</title>
+    <!-- 引入 Vue.js 和 Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+      #responseTextArea {
+        border: none;
+        /* 设置边框样式为无边框 */
+        padding: 10px;
+        /* 设置内边距，如果需要的话 */
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        /* 允许长单词或 URL 换行 */
+        white-space: pre-wrap;
+        word-break: break-all;
+        /* 当一个单词超过容器宽度时，强制它在单词内换行 */
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app">
+      <button @click="sendRequest">获取token</button>
+      <div id="responseTextArea">{{ responseData || '还没有收到token' }}</div>
+    </div>
+
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          responseData: null,
+        },
+        methods: {
+          async sendRequest() {
+            try {
+              const response = await axios.post(
+                "http://localhost:1234/study/log",
+                {
+                  username: "18296160000",
+                  password: "a12345",
+                  ip: "172.17.1.242:30811",
+                }
+              );
+
+              this.responseData = JSON.stringify(response.data, null, 2);
+            } catch (error) {
+              console.error("Error:", error.message);
+              this.responseData = "Error occurred.";
+            }
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
